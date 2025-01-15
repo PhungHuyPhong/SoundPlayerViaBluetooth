@@ -1,0 +1,25 @@
+{
+	"BUILD_DIR" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug/SoundPlayerViaBluetooth_autogen",
+	"CMAKE_BINARY_DIR" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/phong/SoundPlayerViaBluetooth",
+	"CMAKE_SOURCE_DIR" : "/home/phong/SoundPlayerViaBluetooth",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug/SoundPlayerViaBluetooth_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/phong/SoundPlayerViaBluetooth/bluetooth-icon-vector-art-image-600nw-2488448915.webp"
+	],
+	"LOCK_FILE" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug/CMakeFiles/SoundPlayerViaBluetooth_autogen.dir/AutoRcc_Resources_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "Resources" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_Resources.cpp",
+	"RCC_EXECUTABLE" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/host/libexec/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug/CMakeFiles/SoundPlayerViaBluetooth_autogen.dir/AutoRcc_Resources_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/phong/SoundPlayerViaBluetooth/Resources.qrc",
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

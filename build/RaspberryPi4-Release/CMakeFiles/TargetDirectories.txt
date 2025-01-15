@@ -1,0 +1,9 @@
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/SoundPlayerViaBluetooth.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/edit_cache.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/rebuild_cache.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/list_install_components.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/install.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/install/local.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/install/strip.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/SoundPlayerViaBluetooth_autogen_timestamp_deps.dir
+/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/SoundPlayerViaBluetooth_autogen.dir

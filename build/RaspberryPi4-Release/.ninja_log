@@ -1,0 +1,10 @@
+# ninja log v5
+4	1047	1736782834996311481	SoundPlayerViaBluetooth_autogen/timestamp	b06cce4a8e3ba384
+1768	2040	1736781557522849506	SoundPlayerViaBluetooth	8361ff2747a26f9e
+4	1047	1736782834996311481	SoundPlayerViaBluetooth_autogen/mocs_compilation.cpp	b06cce4a8e3ba384
+4	1047	1736782834996311481	/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/SoundPlayerViaBluetooth_autogen/timestamp	b06cce4a8e3ba384
+265	1826	1736065479514544590	CMakeFiles/SoundPlayerViaBluetooth.dir/SoundPlayerViaBluetooth_autogen/mocs_compilation.cpp.o	159d3ea23111be13
+4	1047	1736782834996311481	/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/SoundPlayerViaBluetooth_autogen/mocs_compilation.cpp	b06cce4a8e3ba384
+265	1827	1736065479516544597	CMakeFiles/SoundPlayerViaBluetooth.dir/main.cpp.o	4102390f62f57826
+2040	2045	0	CMakeFiles/install.util	2c3b2a23bb921589
+25	1768	1736781557244826906	CMakeFiles/SoundPlayerViaBluetooth.dir/mainwindow.cpp.o	d498d14b4b8fe072
