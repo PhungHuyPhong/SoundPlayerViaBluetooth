@@ -1555,9 +1555,6 @@
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "/usr/local/share/cmake-3.30/Modules/GNUInstallDirs.cmake"
-		},
-		{
-			"path" : "Resources.qrc"
 		}
 	],
 	"kind" : "cmakeFiles",

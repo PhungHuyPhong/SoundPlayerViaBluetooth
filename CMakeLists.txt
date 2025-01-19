@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath-link,/home/phong/workspace/qt-rpi-cross-compilation/rpi-sysroot/usr/lib/aarch64-linux-gnu/pulseaudio")
 
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Multimedia MultimediaWidgets Bluetooth)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Multimedia MultimediaWidgets Bluetooth DBus)
 
 
 set(PROJECT_SOURCES
@@ -42,7 +42,7 @@ else()
     else()
         add_executable(SoundPlayerViaBluetooth
             ${PROJECT_SOURCES}
-            Resources.qrc
+
 
         )
     endif()
@@ -55,6 +55,7 @@ target_link_libraries(SoundPlayerViaBluetooth PRIVATE
     Qt6::Multimedia
     Qt6::MultimediaWidgets
     Qt6::Bluetooth
+    Qt6::DBus
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

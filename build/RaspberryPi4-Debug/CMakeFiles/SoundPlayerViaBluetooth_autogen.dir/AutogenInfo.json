@@ -370,8 +370,7 @@
 		"/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/cmake/Qt6Bluetooth/Qt6BluetoothTargets-release.cmake",
 		"/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/cmake/Qt6Bluetooth/Qt6BluetoothAdditionalTargetInfo.cmake",
 		"/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/cmake/Qt6Bluetooth/Qt6BluetoothVersionlessAliasTargets.cmake",
-		"/usr/local/share/cmake-3.30/Modules/GNUInstallDirs.cmake",
-		"/home/phong/SoundPlayerViaBluetooth/Resources.qrc"
+		"/usr/local/share/cmake-3.30/Modules/GNUInstallDirs.cmake"
 	],
 	"CMAKE_SOURCE_DIR" : "/home/phong/SoundPlayerViaBluetooth",
 	"CROSS_CONFIG" : false,
@@ -393,6 +392,7 @@
 	[
 		"QT_BLUETOOTH_LIB",
 		"QT_CORE_LIB",
+		"QT_DBUS_LIB",
 		"QT_GUI_LIB",
 		"QT_MULTIMEDIAWIDGETS_LIB",
 		"QT_MULTIMEDIA_LIB",
@@ -417,6 +417,7 @@
 		"/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/include/QtNetwork",
 		"/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/include/QtMultimediaWidgets",
 		"/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/include/QtBluetooth",
+		"/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/include/QtDBus",
 		"/home/phong/workspace/qt-rpi-cross-compilation/rpi-sysroot/usr/include",
 		"/home/phong/workspace/qt-rpi-cross-compilation/rpi-sysroot/usr/include/aarch64-linux-gnu",
 		"/opt/cross-pi-gcc/aarch64-linux-gnu/include/c++/12.2.0",

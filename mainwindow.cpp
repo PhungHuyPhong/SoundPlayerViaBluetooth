@@ -1,79 +1,69 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFileInfo>
-#include <QTime>
-#include <QBluetoothDeviceInfo>
+
+MainWindow::~MainWindow() {
+    delete ui;  // Giải phóng bộ nhớ giao diện nếu `ui` được cấp phát động
+}
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    player(new QMediaPlayer(this)),
-    audioOutput(new QAudioOutput(this)),
-    videoWidget(new QVideoWidget(this)),
-    discoveryAgent(new QBluetoothDeviceDiscoveryAgent(this)),
-    // IS_Pause(true),
-    // IS_Muted(false),
-    currentSongIndex(0),
-    mDuration(0)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    // Set up player, audioOutput, and videoWidget
-    player->setAudioOutput(audioOutput);
-    player->setVideoOutput(videoWidget);
+    // Khởi tạo Player, AudioOutput, và Video chỉ một lần
+    Player = new QMediaPlayer(this);
+    AudioOutput = new QAudioOutput(this);
+    Video = new QVideoWidget(this);
+    DiscoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
+    //ListDevice = new QListWidget(this);
+   // setCentralWidget(ListDevice);
+    Player->setAudioOutput(AudioOutput);  // Liên kết với QMediaPlayer
+    Player->setVideoOutput(Video);  // Liên kết với Video
 
-    // Set video widget into the groupBox_Video container
-    videoWidget->setGeometry(5, 5, ui->groupBox_Video->width() - 5, ui->groupBox_Video->height() - 5);
-    videoWidget->setParent(ui->groupBox_Video);
+    // Đặt video widget vào groupBox_Video
+    Video->setGeometry(5, 5, ui->groupBox_Video->width() - 5, ui->groupBox_Video->height() - 5);
+    Video->setParent(ui->groupBox_Video);
 
-    // Set icons for buttons
+    // Thiết lập icon cho các nút một lần trong constructor
     ui->pushButton_Play_Pause->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->pushButton_Play_Pause->setIconSize(QSize(45, 45));
-    ui->pushButton_Stop->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
-    ui->pushButton_Stop->setIconSize(QSize(45, 45));
+    ui->pushButton_Play_Pause->setIconSize(QSize(60, 60));
+   // ui->pushButton_Play_Pause->setIcon(QIcon(":/bluetooth-icon-vector-art-image-600nw-2488448915.webp"));
+   // ui->pushButton_Play_Pause->setCheckable(true);
+    //ui->pushButton_Stop->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
+    //ui->pushButton_Stop->setIconSize(QSize(45, 45));
     ui->pushButton_Seek_Backward->setIcon(style()->standardIcon(QStyle::SP_MediaSeekBackward));
-    ui->pushButton_Seek_Backward->setIconSize(QSize(45, 45));
+    ui->pushButton_Seek_Backward->setIconSize(QSize(45,45));
     ui->pushButton_Seek_Forward->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));
-    ui->pushButton_Seek_Forward->setIconSize(QSize(45, 45));
+    ui->pushButton_Seek_Forward->setIconSize(QSize(45,45));
     ui->pushButton_Volume->setIcon(style()->standardIcon(QStyle::SP_MediaVolume));
-    ui->pushButton_Volume->setIconSize(QSize(100, 100));
-
-    // Set up volume slider
+    ui->pushButton_Volume->setIconSize(QSize(200,200));
+    ui->pushButton_Next->setIcon(style()->standardIcon(QStyle::SP_MediaSkipForward));
+    ui->pushButton_Next->setIconSize(QSize(45,45));
+    ui->pushButton_Previous->setIcon(style()->standardIcon(QStyle::SP_MediaSkipBackward));
+    ui->pushButton_Previous->setIconSize(QSize(45,45));
+    ui->videoLabel->setPixmap(style()->standardPixmap(QStyle::SP_MediaStop));
+    // Cài đặt thanh trượt âm lượng
     ui->horizontalSlider_Volume->setMinimum(0);
     ui->horizontalSlider_Volume->setMaximum(100);
-    ui->horizontalSlider_Volume->setValue(10);
-    audioOutput->setVolume(ui->horizontalSlider_Volume->value() / 100.0);
+    ui->horizontalSlider_Volume->setValue(30);
+    AudioOutput->setVolume(ui->horizontalSlider_Volume->value() / 100.0);
 
-    // Connect signals and slots
-    connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
-    connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
+    connect(Player, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
+    connect(Player, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
     connect(ui->pushButton_Next, &QPushButton::clicked, this, &MainWindow::playNextSong);
     connect(ui->pushButton_Previous, &QPushButton::clicked, this, &MainWindow::playPreviousSong);
     connect(ui->horizontalSlider_Duration, &QSlider::valueChanged, this, &MainWindow::checkSliderPosition);
 
-    connect(ui->pushButton_Bluetooth, &QPushButton::clicked, this, &MainWindow::toggleBluetooth);
+    // Thiết lập phạm vi cho thanh trượt thời gian
+    ui->horizontalSlider_Duration->setRange(0, Player->duration() / 1000);
 
-
-    // Volume control
+    // Kết nối sự kiện thay đổi âm lượng
     connect(ui->horizontalSlider_Volume, &QSlider::valueChanged, [&](int value) {
-        if (!audioOutput->isMuted()) {
-            audioOutput->setVolume(value / 100.0);
+        if (!AudioOutput->isMuted()) {
+            AudioOutput->setVolume(value / 100.0);
         }
     });
-
-    // Set up duration slider
-    ui->horizontalSlider_Duration->setRange(0, player->duration() / 1000);
-
-    // Connect Bluetooth
-    connectBluetooth();
-}
-
-MainWindow::~MainWindow() {
-    delete ui;
-    delete discoveryAgent;
-    delete player;
-    delete audioOutput;
-    delete videoWidget;
+   // adjustSize();
 }
 
 void MainWindow::on_actionOpen_File_triggered() {
@@ -81,7 +71,7 @@ void MainWindow::on_actionOpen_File_triggered() {
         this, tr("Open Files"), "", tr("Media Files (*.mp4 *.mp3)"));
 
     if (!fileNames.isEmpty()) {
-        loadPlaylist(fileNames); // Load playlist with selected files
+        loadPlaylist(fileNames); // Nạp playlist với các tệp đã chọn
     }
 }
 
@@ -90,64 +80,68 @@ void MainWindow::durationChanged(qint64 duration) {
     ui->horizontalSlider_Duration->setMaximum(mDuration);
 }
 
-void MainWindow::positionChanged(qint64 position) {
+void MainWindow::positionChanged(qint64 duration) {
     if (!ui->horizontalSlider_Duration->isSliderDown()) {
-        ui->horizontalSlider_Duration->setValue(position / 1000);
+        ui->horizontalSlider_Duration->setValue(duration / 1000);
     }
-    updateDuration(position / 1000);
+    updateDuration(duration / 1000);
 }
 
-void MainWindow::updateDuration(qint64 duration) {
-    QTime currentTime((duration / 3600) % 60, (duration / 60) % 60, duration % 60);
-    QTime totalTime((mDuration / 3600) % 60, (mDuration / 60) % 60, mDuration % 60);
-    QString format = (mDuration > 3600) ? "hh:mm:ss" : "mm:ss";
+void MainWindow::updateDuration(qint64 Duration) {
+    QTime CurrentTime((Duration / 3600) % 60, (Duration / 60) % 60, Duration % 60);
+    QTime TotalTime((mDuration / 3600) % 60, (mDuration / 60) % 60, mDuration % 60);
+    QString Format = (mDuration > 3600) ? "hh:mm:ss" : "mm:ss";
 
-    ui->label_current_Time->setText(currentTime.toString(format));
-    ui->label_Total_Time->setText(totalTime.toString(format));
+    ui->label_current_Time->setText(CurrentTime.toString(Format));
+    ui->label_Total_Time->setText(TotalTime.toString(Format));
+}
+
+void MainWindow::on_horizontalSlider_Duration_valueChanged(int value) {
+    Player->setPosition(value * 1000);
 }
 
 void MainWindow::on_pushButton_Play_Pause_clicked() {
     if (IS_Pause) {
         IS_Pause = false;
-        player->play();
+        Player->play();
         ui->pushButton_Play_Pause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
     } else {
         IS_Pause = true;
-        player->pause();
+        Player->pause();
         ui->pushButton_Play_Pause->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
     }
 }
 
-void MainWindow::on_pushButton_Stop_clicked() {
-    player->stop();
-    IS_Pause = true;
-    ui->pushButton_Play_Pause->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
-}
+//void MainWindow::on_pushButton_Stop_clicked() {
+  //  Player->stop();
+  //  IS_Pause = true;
+  //  ui->pushButton_Play_Pause->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+//}
 
 void MainWindow::on_pushButton_Volume_clicked() {
     IS_Muted = !IS_Muted;
-    audioOutput->setMuted(IS_Muted);
+    AudioOutput->setMuted(IS_Muted);
     ui->pushButton_Volume->setIcon(style()->standardIcon(IS_Muted ? QStyle::SP_MediaVolumeMuted : QStyle::SP_MediaVolume));
 }
 
 void MainWindow::on_horizontalSlider_Volume_valueChanged(int value) {
-    audioOutput->setVolume(value / 100.0);
+    AudioOutput->setVolume(value / 100.0);
 }
 
 void MainWindow::on_pushButton_Seek_Backward_clicked() {
     int newPosition = ui->horizontalSlider_Duration->value() - 5;
     ui->horizontalSlider_Duration->setValue(newPosition);
-    player->setPosition(newPosition * 1000);
+    Player->setPosition(newPosition * 1000);
 }
 
 void MainWindow::on_pushButton_Seek_Forward_clicked() {
     int newPosition = ui->horizontalSlider_Duration->value() + 5;
     ui->horizontalSlider_Duration->setValue(newPosition);
-    player->setPosition(newPosition * 1000);
+    Player->setPosition(newPosition * 1000);
 }
 
 void MainWindow::loadPlaylist(const QStringList &songs) {
-    playlist = songs;  // Only store the file paths
+    playlist = songs;  // Chỉ lưu danh sách đường dẫn tệp
     currentSongIndex = 0;
     playSong(currentSongIndex);
 }
@@ -157,12 +151,20 @@ void MainWindow::playNextSong() {
         currentSongIndex++;
         playSong(currentSongIndex);
     }
+    else{
+        playSong(0);
+        currentSongIndex = 0;
+    }
 }
 
 void MainWindow::playPreviousSong() {
     if (currentSongIndex - 1 >= 0) {
         currentSongIndex--;
         playSong(currentSongIndex);
+    }
+    else{
+        playSong(playlist.size()-1);
+        currentSongIndex = playlist.size()-1;
     }
 }
 
@@ -174,132 +176,61 @@ void MainWindow::checkSliderPosition(int value) {
 
 void MainWindow::playSong(int index) {
     if (index >= 0 && index < playlist.size()) {
-        player->setSource(QUrl::fromLocalFile(playlist[index]));
-        player->play();
+        Player->setSource(QUrl::fromLocalFile(playlist[index]));
+        Player->play();
 
-        // Update Play/Pause button
-        IS_Pause = false;
+        // Cập nhật nút Play/Pause
+        IS_Pause = false;  // Đặt IS_Pause là false khi bài hát được phát
         ui->pushButton_Play_Pause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
 
-        // Get the file name without extension
-        QString songName = QFileInfo(playlist[index]).baseName();
-        ui->label_songTitle->setText(songName);
+        // Lấy tên file mà không có phần mở rộng
+        QString songName = QFileInfo(playlist[index]).baseName();  // Lấy tên tệp không có đuôi
+        ui->label_songTitle->setText(songName);  // Hiển thị tên bài hát trên nhãn
     }
 }
 
-void MainWindow::addSong() {
-    QString fileName = QFileDialog::getOpenFileName(this, "Add Song", "", "Audio and Video Files (*.mp3 *.wav *.mp4 *.avi)");
-    if (!fileName.isEmpty()) {
-        ui->playlistWidget->addItem(fileName);  // Add file to playlist
-        player->setSource(QUrl::fromLocalFile(fileName));
-    }
-}
-
-void MainWindow::savePlaylist() {
-    QString fileName = QFileDialog::getSaveFileName(this, "Save Playlist", "", "JSON Files (*.json)");
-    if (!fileName.isEmpty()) {
-        QJsonArray jsonArray;
-        for (int i = 0; i < ui->playlistWidget->count(); ++i) {
-            jsonArray.append(ui->playlistWidget->item(i)->text());
-        }
-        QJsonDocument doc(jsonArray);
-        QFile file(fileName);
-        if (file.open(QIODevice::WriteOnly)) {
-            file.write(doc.toJson());
-            file.close();
-        }
-    }
-}
-
-void MainWindow::loadPlaylist() {
-    QString fileName = QFileDialog::getOpenFileName(this, "Load Playlist", "", "JSON Files (*.json)");
-    if (!fileName.isEmpty()) {
-        QFile file(fileName);
-        if (file.open(QIODevice::ReadOnly)) {
-            QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
-            QJsonArray jsonArray = doc.array();
-            ui->playlistWidget->clear();
-            for (const auto &url : jsonArray) {
-                ui->playlistWidget->addItem(url.toString());
-            }
-            file.close();
-        }
-    }
-}
-
-void MainWindow::connectBluetooth() {
-    discoveryAgent->start();
-    connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, [this](const QBluetoothDeviceInfo &info) {
-        QMessageBox::information(this, "Device Found", info.name() + " - " + info.address().toString());
+void MainWindow::on_actionAdd_Device_triggered() //Scan devices and display name and address of each scanned device
+{
+    QDialog *deviceDialog = new QDialog(this);
+    deviceDialog->setWindowTitle(tr("Add New Device"));
+    QListWidget *ListDevice = new QListWidget(deviceDialog);
+    DiscoveryAgent->start();
+    connect(DiscoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, [ListDevice](const QBluetoothDeviceInfo &info) {
+        ListDevice->addItem(info.name());
     });
+    connect(ListDevice, &QListWidget::itemClicked, this, [this](QListWidgetItem *item) {
+        ConnectToDevice(item->text()); // Kết nối với thiết bị đã chọn
+    });
+    deviceDialog->exec();
+}
+void MainWindow::ConnectToDevice(const QString &DeviceName){
+    // Tìm thiết bị Bluetooth từ danh sách các thiết bị đã phát hiện
+    foreach (const QBluetoothDeviceInfo &device, DiscoveryAgent->discoveredDevices()) {
+        if (device.name() == DeviceName) {
+            // Tạo một QBluetoothSocket để kết nối
+            QBluetoothSocket *socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this);
+
+            // Kết nối tín hiệu lỗi và thành công của kết nối
+            connect(socket, &QBluetoothSocket::connected, this, &MainWindow::onDeviceConnected);
+            connect(socket, &QBluetoothSocket::errorOccurred, this, &MainWindow::onDeviceError);
+
+            // Kết nối đến thiết bị qua địa chỉ và cổng của nó
+            static const QString serviceUuid(QStringLiteral("0000110b-0000-1000-8000-00805f9b34fb"));
+            socket->connectToService(device.address(), QBluetoothUuid(serviceUuid));
+            qDebug() << "Connecting to device: " << DeviceName;
+            return;
+        }
+    }
+    qDebug() << "Device not found: " << DeviceName;
+}
+void MainWindow::onDeviceConnected()
+{
+    qDebug() << "Connected to device!";
+    // Bạn có thể thực hiện các thao tác thêm sau khi kết nối thành công, ví dụ: gửi/nhận dữ liệu
 }
 
-void MainWindow::onBluetoothButtonClicked() {
-    // Ví dụ: bắt đầu tìm kiếm thiết bị Bluetooth
-    if (discoveryAgent->isActive()) {
-        discoveryAgent->stop();
-        QMessageBox::information(this, "Bluetooth", "Dừng tìm kiếm thiết bị.");
-    } else {
-        discoveryAgent->start();
-        QMessageBox::information(this, "Bluetooth", "Bắt đầu tìm kiếm thiết bị.");
-    }
+void MainWindow::onDeviceError(QBluetoothSocket::SocketError error)
+{
+    qDebug() << "Error occurred: " << error;
+    // Xử lý lỗi kết nối tại đây
 }
-
-// void MainWindow::toggleBluetooth() {
-//     QBluetoothLocalDevice localDevice;
-
-//     if (!localDevice.isValid()) {
-//         QMessageBox::critical(this, "Bluetooth", "Bluetooth không khả dụng trên thiết bị này!");
-//         return;
-//     }
-
-//     // Kiểm tra và bật chế độ discoverable nếu chưa bật
-//     if (!localDevice.hostMode().testFlag(QBluetoothLocalDevice::HostDiscoverable)) {
-//         localDevice.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
-//         QMessageBox::information(this, "Bluetooth", "Bluetooth đã được bật.");
-//     } else {
-//         QMessageBox::information(this, "Bluetooth", "Bluetooth đã sẵn sàng.");
-//     }
-// }
-
-void MainWindow::toggleBluetooth() {
-    QBluetoothLocalDevice localDevice;
-
-    // Kiểm tra nếu Bluetooth không khả dụng
-    if (!localDevice.isValid()) {
-        QMessageBox::critical(this, "Bluetooth", "Bluetooth không khả dụng trên thiết bị này!");
-        return;
-    }
-
-    // Kiểm tra chế độ hiện tại và chuyển sang HostDiscoverable nếu cần
-    if (localDevice.hostMode() != QBluetoothLocalDevice::HostDiscoverable) {
-        localDevice.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
-        QMessageBox::information(this, "Bluetooth", "Bluetooth đã được bật.");
-    } else {
-        QMessageBox::information(this, "Bluetooth", "Bluetooth đã ở chế độ HostDiscoverable.");
-    }
-}
-
-// QBluetoothLocalDevice localDevice;
-// if (!localDevice.isValid()) {
-//     QMessageBox::critical(this, "Bluetooth", "Bluetooth không khả dụng trên thiết bị này!");
-//     return;
-// }
-
-// if (!localDevice.hostMode().testFlag(QBluetoothLocalDevice::HostDiscoverable)) {
-//     localDevice.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
-//     QMessageBox::information(this, "Bluetooth", "Bluetooth đã được bật.");
-// }
-
-
-// void MainWindow::positionChanged(qint64 duration) {
-//     if (!ui->horizontalSlider_Duration->isSliderDown()) {
-//         ui->horizontalSlider_Duration->setValue(duration / 1000);
-//     }
-//     updateDuration(position / 1000);
-// }
-
-// void MainWindow::durationChanged(qint64 duration) {
-//     mDuration = duration / 1000;
-//     ui->horizontalSlider_Duration->setMaximum(mDuration);
-// }

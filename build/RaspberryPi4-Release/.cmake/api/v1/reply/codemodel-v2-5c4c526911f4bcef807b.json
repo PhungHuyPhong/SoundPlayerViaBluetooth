@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Release-8a6ba7639c656e9b2b8f.json",
+					"jsonFile" : "directory-.-Release-18372166a29e545fe22e.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "SoundPlayerViaBluetooth::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SoundPlayerViaBluetooth-Release-ca00cf0837bd6289693d.json",
+					"jsonFile" : "target-SoundPlayerViaBluetooth-Release-6b08c663fef1a00d3024.json",
 					"name" : "SoundPlayerViaBluetooth",
 					"projectIndex" : 0
 				},

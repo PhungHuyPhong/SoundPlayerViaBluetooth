@@ -304,6 +304,9 @@ QT_QMAKE_EXECUTABLE:FILEPATH=/home/phong/workspace/qt-rpi-cross-compilation/qt6/
 
 QT_QMAKE_TARGET_MKSPEC:STRING=devices/linux-rasp-pi4-aarch64
 
+//The directory containing a CMake configuration file for Qt6Bluetooth.
+Qt6Bluetooth_DIR:PATH=/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/cmake/Qt6Bluetooth
+
 //The directory containing a CMake configuration file for Qt6CoreTools.
 Qt6CoreTools_DIR:PATH=/home/phong/workspace/qt-rpi-cross-compilation/qt6/host/lib/cmake/Qt6CoreTools
 
@@ -683,6 +686,10 @@ QT_FEATURE_avx512vbmi2:INTERNAL=OFF
 QT_FEATURE_avx512vl:INTERNAL=OFF
 //Qt feature: backtrace (from target Qt6::Core)
 QT_FEATURE_backtrace:INTERNAL=ON
+//Qt feature: bluez (from target Qt6::Bluetooth)
+QT_FEATURE_bluez:INTERNAL=OFF
+//Qt feature: bluez_le (from target Qt6::Bluetooth)
+QT_FEATURE_bluez_le:INTERNAL=OFF
 //Qt feature: brotli (from target Qt6::Network)
 QT_FEATURE_brotli:INTERNAL=ON
 //Qt feature: buttongroup (from target Qt6::Widgets)
@@ -1015,6 +1022,8 @@ QT_FEATURE_libudev:INTERNAL=ON
 QT_FEATURE_lineedit:INTERNAL=ON
 //Qt feature: linkat (from target Qt6::Core)
 QT_FEATURE_linkat:INTERNAL=ON
+//Qt feature: linux_crypto_api (from target Qt6::Bluetooth)
+QT_FEATURE_linux_crypto_api:INTERNAL=OFF
 //Qt feature: linux_dmabuf (from target Qt6::Multimedia)
 QT_FEATURE_linux_dmabuf:INTERNAL=ON
 //Qt feature: linux_netlink (from target Qt6::Network)
@@ -1447,6 +1456,8 @@ QT_FEATURE_wheelevent:INTERNAL=ON
 QT_FEATURE_widgets:INTERNAL=ON
 //Qt feature: widgettextcontrol (from target Qt6::Widgets)
 QT_FEATURE_widgettextcontrol:INTERNAL=ON
+//Qt feature: winrt_bt (from target Qt6::Bluetooth)
+QT_FEATURE_winrt_bt:INTERNAL=OFF
 //Qt feature: wizard (from target Qt6::Widgets)
 QT_FEATURE_wizard:INTERNAL=ON
 //Qt feature: wmf (from target Qt6::Multimedia)

@@ -43,7 +43,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "Debug"
+			"value" : "Release"
 		},
 		{
 			"name" : "CMAKE_CACHEFILE_DIR",
@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug"
+			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -231,7 +231,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "-DQT_QML_DEBUG"
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS_MINSIZEREL",
@@ -463,7 +463,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug/CMakeFiles/pkgRedirects"
+			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -1010,8 +1010,8 @@
 					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "UNINITIALIZED",
-			"value" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi;/usr/local/qt6"
+			"type" : "PATH",
+			"value" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi"
 		},
 		{
 			"name" : "CMAKE_PROJECT_DESCRIPTION",
@@ -1047,7 +1047,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug/.qtc/package-manager/auto-setup.cmake"
+			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release/.qtc/package-manager/auto-setup.cmake"
 		},
 		{
 			"name" : "CMAKE_PROJECT_NAME",
@@ -2451,18 +2451,6 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "ON"
-		},
-		{
-			"name" : "QT_DEBUG_FIND_PACKAGE",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
-				}
-			],
-			"type" : "UNINITIALIZED",
 			"value" : "ON"
 		},
 		{
@@ -7878,6 +7866,18 @@
 			"value" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/cmake/Qt6Network"
 		},
 		{
+			"name" : "Qt6Qt6Multimedia_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for Qt6Qt6Multimedia."
+				}
+			],
+			"type" : "PATH",
+			"value" : "Qt6Qt6Multimedia_DIR-NOTFOUND"
+		},
+		{
 			"name" : "Qt6WidgetsTools_DIR",
 			"properties" : 
 			[
@@ -7923,7 +7923,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug"
+			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Release"
 		},
 		{
 			"name" : "SoundPlayerViaBluetooth_IS_TOP_LEVEL",
@@ -8088,42 +8088,6 @@
 			],
 			"type" : "INTERNAL",
 			"value" : "/usr/lib/aarch64-linux-gnu"
-		},
-		{
-			"name" : "untitled_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/phong/SoundPlayerViaBluetooth/build/RaspberryPi4-Debug"
-		},
-		{
-			"name" : "untitled_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "untitled_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/phong/SoundPlayerViaBluetooth"
 		}
 	],
 	"kind" : "cache",

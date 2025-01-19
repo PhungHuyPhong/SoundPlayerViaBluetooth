@@ -46,7 +46,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 75,
+				"line" : 76,
 				"parent" : 0
 			},
 			{
@@ -178,6 +178,10 @@
 				},
 				{
 					"backtrace" : 3,
+					"define" : "QT_DBUS_LIB"
+				},
+				{
+					"backtrace" : 3,
 					"define" : "QT_GUI_LIB"
 				},
 				{
@@ -247,6 +251,11 @@
 					"backtrace" : 3,
 					"isSystem" : true,
 					"path" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/include/QtBluetooth"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/include/QtDBus"
 				}
 			],
 			"language" : "CXX",
@@ -349,6 +358,11 @@
 				"role" : "libraries"
 			},
 			{
+				"backtrace" : 3,
+				"fragment" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/libQt6DBus.so.6.8.0",
+				"role" : "libraries"
+			},
+			{
 				"backtrace" : 22,
 				"fragment" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/libQt6Network.so.6.8.0",
 				"role" : "libraries"
@@ -356,10 +370,6 @@
 			{
 				"backtrace" : 3,
 				"fragment" : "/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib/libQt6Core.so.6.8.0",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-Wl,-rpath-link,/home/phong/workspace/qt-rpi-cross-compilation/qt6/pi/lib",
 				"role" : "libraries"
 			}
 		],
